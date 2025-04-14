@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snack Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary-color: #ff8c00;
+            --secondary-color: #ffa500;
+            --text-color: #333;
+            --white: #fff;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+        }
+
+        .header-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-link {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            text-align: center;
+            color: var(--text-color);
+        }
+
+        .logo {
+            font-size: 2.8rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            color: var(--primary-color);
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .menu-container {
+            padding: 20px 10px;
+        }
+
+        .menu-category {
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-title {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 4px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .menu-item {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .item-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .item-content {
+            padding: 12px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 6px;
+        }
+
+        .item-name {
+            font-size: 1rem;
+            color: var(--text-color);
+            font-weight: 600;
+            flex: 1;
+            margin-right: 8px;
+        }
+
+        .item-price {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            white-space: nowrap;
+        }
+
+        .item-description {
+            font-size: 0.85rem;
+            color: #666;
+            margin: 4px 0;
+            line-height: 1.3;
+        }
+
+        .item-icon {
+            color: var(--primary-color);
+            margin-right: 8px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 6px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            margin-right: 6px;
+        }
+
+        .veg {
+            background: #e6ffe6;
+            color: #008000;
+        }
+
+        .non-veg {
+            background: #ffe6e6;
+            color: #ff0000;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+                z-index: 1000;
+            }
+
+            .nav-menu {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(255, 255, 255, 0.98);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 30px;
+                z-index: 999;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .hamburger.active .hamburger-line:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .hamburger.active .hamburger-line:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active .hamburger-line:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .menu-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 10px;
+            }
+
+            .menu-category {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+
+            .item-image {
+                height: 120px;
+            }
+
+            .item-content {
+                padding: 8px;
+            }
+
+            .item-name {
+                font-size: 0.9rem;
+            }
+
+            .item-price {
+                font-size: 1rem;
+            }
+
+            .item-description {
+                font-size: 0.8rem;
+                margin: 4px 0;
+            }
+
+            .order-btn {
+                padding: 5px 10px;
+                font-size: 0.85rem;
+            }
+        }
+
+        .order-btn {
+            display: none;
+        }
+
+        /* Add smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Add loading animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .menu-item {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* Add a subtle hover effect for images */
+        .menu-item:hover .item-image {
+            transform: scale(1.03);
+        }
+
+        /* Add category count badges */
+        .category-count {
+            background: var(--primary-color);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+
+        /* Improve spacing for better readability */
+        .item-content > * {
+            margin-bottom: 4px;
+        }
+
+        .item-content > *:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Add subtle border to separate items */
+        .menu-item {
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* Make badges more visible */
+        .veg, .non-veg {
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-container">
+        <header class="container">
+            <div class="header-content">
+                <div class="logo">SNACK STUDIO</div>
+                <div class="hamburger">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </div>
+                <nav class="nav-menu">
+                    <a href="#momos" class="nav-link">Momos & Nuggets</a>
+                    <a href="#chicken" class="nav-link">Chicken</a>
+                    <a href="#sides" class="nav-link">Sides</a>
+                    <a href="tel:+1234567890" class="nav-link">
+                        <i class="fas fa-phone"></i> Order Now
+                    </a>
+                </nav>
+            </div>
+            <div class="tagline">Delicious Snacks, Unforgettable Moments</div>
+        </header>
+    </div>
+
+    <div class="container">
+        <div class="menu-container">
+            <div class="menu-category" id="momos">
+                <h2 class="category-title">
+                    Momos & Nuggets
+                    <span class="category-count">4 items</span>
+                </h2>
+                <div class="menu-grid">
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1562967916-eb82221dfb92?w=600" alt="Cheese Corn Nuggets" class="item-image">
+                        <div class="item-content">
+                            <div class="item-header">
+                                <span class="item-name">
+                                    <i class="fas fa-cheese item-icon"></i>
+                                    Cheese Corn Nuggets
+                                </span>
+                                <span class="item-price">₹129</span>
+                            </div>
+                            <span class="badge veg">Veg</span>
+                            <div class="item-description">Crispy nuggets filled with sweet corn and melted cheese</div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1562967914-01efa7e87832?w=600&q=80" alt="Chicken Nuggets" class="item-image">
+                        <div class="item-content">
+                            <div class="item-header">
+                                <span class="item-name">
+                                    <i class="fas fa-drumstick-bite item-icon"></i>
+                                    Chicken Nuggets
+                                </span>
+                                <span class="item-price">₹149</span>
+                            </div>
+                            <span class="badge non-veg">Non-veg</span>
+                            <div class="item-description">Crispy chicken nuggets served with special dip</div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?w=600" alt="Veg Momos" class="item-image">
+                        <div class="item-content">
+                            <div class="item-header">
+                                <span class="item-name">
+                                    <i class="fas fa-utensils item-icon"></i>
+                                    Veg Momos
+                                </span>
+                                <span class="item-price">₹99</span>
+                            </div>
+                            <span class="badge veg">Veg</span>
+                            <div class="item-description">Steamed dumplings with spiced vegetable filling</div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?w=600" alt="Paneer Momos" class="item-image">
+                        <div class="item-content">
+                            <div class="item-header">
+                                <span class="item-name">
+                                    <i class="fas fa-utensils item-icon"></i>
+                                    Paneer Momos
+                                </span>
+                                <span class="item-price">₹119</span>
+                            </div>
+                            <span class="badge veg">Veg</span>
+                            <div class="item-description">Steamed dumplings with spiced cottage cheese filling</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-category" id="chicken">
+                <h2 class="category-title">
+                    Chicken Specialties
+                    <span class="category-count">3 items</span>
+                </h2>
+                <div class="menu-grid">
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=600" alt="Chicken Wings" class="item-image">
+                        <div class="item-content">
+                            <div class="item-header">
+                                <span class="item-name">
+                                    <i class="fas fa-drumstick-bite item-icon"></i>
+                                    Chicken Wings
+                                </span>
+                                <span class="item-price">₹199</span>
+                            </div>
+                            <span class="badge non-veg">Non-veg</span>
+                            <div class="item-description">Crispy fried wings tossed in special sauce</div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1562967914-608f82629710?w=600" alt="Chicken Lollipop" class="item-image">
+                        <div class="item-content">
+                            <div class="item-header">
+                                <span class="item-name">
+                                    <i class="fas fa-drumstick-bite item-icon"></i>
+                                    Chicken Lollipop
+                                </span>
+                                <span class="item-price">₹179</span>
+                            </div>
+                            <span class="badge non-veg">Non-veg</span>
+                            <div class="item-description">Classic chicken lollipop with spicy coating</div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1562967915-92ae0c320a01?w=600" alt="Chicken Popcorn" class="item-image">
+                        <div class="item-content">
+                            <div class="item-header">
+                                <span class="item-name">
+                                    <i class="fas fa-drumstick-bite item-icon"></i>
+                                    Chicken Popcorn
+                                </span>
+                                <span class="item-price">₹159</span>
+                            </div>
+                            <span class="badge non-veg">Non-veg</span>
+                            <div class="item-description">Bite-sized crispy chicken pieces</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-category" id="sides">
+                <h2 class="category-title">
+                    Sides & Extras
+                    <span class="category-count">4 items</span>
+                </h2>
+                <div class="menu-grid">
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=600" alt="French Fries" class="item-image">
+                        <div class="item-content">
+                            <div class="item-header">
+                                <span class="item-name">
+                                    <i class="fas fa-french-fries item-icon"></i>
+                                    French Fries (Classic)
+                                </span>
+                                <span class="item-price">₹99</span>
+                            </div>
+                            <span class="badge veg">Veg</span>
+                            <div class="item-description">Crispy golden fries with classic seasoning</div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=600" alt="Peri Peri Fries" class="item-image">
+                        <div class="item-content">
+                            <div class="item-header">
+                                <span class="item-name">
+                                    <i class="fas fa-pepper-hot item-icon"></i>
+                                    French Fries (Peri Peri)
+                                </span>
+                                <span class="item-price">₹109</span>
+                            </div>
+                            <span class="badge veg">Veg</span>
+                            <div class="item-description">Crispy fries tossed in spicy peri peri seasoning</div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=600" alt="Paneer Plaita" class="item-image">
+                        <div class="item-content">
+                            <div class="item-header">
+                                <span class="item-name">
+                                    <i class="fas fa-burger item-icon"></i>
+                                    Paneer Plaita Burger
+                                </span>
+                                <span class="item-price">₹169</span>
+                            </div>
+                            <span class="badge veg">Veg</span>
+                            <div class="item-description">Grilled paneer patty in a soft bun, served with rich curry sauce, fresh lettuce, onions, and melted cheese</div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1603064752734-4c48eff53d05?w=600" alt="Chicken Plaita" class="item-image">
+                        <div class="item-content">
+                            <div class="item-header">
+                                <span class="item-name">
+                                    <i class="fas fa-burger item-icon"></i>
+                                    Chicken Plaita Burger
+                                </span>
+                                <span class="item-price">₹189</span>
+                            </div>
+                            <span class="badge non-veg">Non-veg</span>
+                            <div class="item-description">Grilled chicken patty in a soft bun, served with rich curry sauce, fresh lettuce, onions, and melted cheese</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu functionality
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
